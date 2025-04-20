@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumonia Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Pneumonia Detection</h1>
+            <p>AI-powered chest X-ray analysis</p>
+        </header>
+        <main class="app-main">
+            <div class="card">
+                <i class="fas fa-stethoscope fa-3x"></i>
+                <p>Get started by uploading your chest X-ray for instant analysis!</p>
+                <a href="/upload" class="btn btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </main>
+        <footer class="app-footer">
+            <p>© 2025 Pneumonia Detection. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>

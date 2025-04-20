@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumonia Detection Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Prediction Dashboard</h1>
+            <a href="/upload" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back</a>
+        </header>
+        <main class="app-main">
+            <div class="card">
+                <i class="fas fa-chart-line fa-3x"></i>
+                <div class="result-section">
+                    <p><strong>Prediction:</strong> <span id="prediction">{{ prediction }}</span></p>
+                    <p><strong>Confidence:</strong> <span id="confidence">{{ confidence }}</span>%</p>
+                </div>
+                <canvas id="accuracyChart" width="400" height="200"></canvas>
+                <div class="heatmap-section">
+                    <h3>Heatmap</h3>
+                    <img id="heatmap" src="{{ heatmap }}" alt="Heatmap" class="heatmap-img">
+                </div>
+                <div class="nav-buttons">
+                    <a href="/upload" class="btn btn-secondary">Try Again</a>
+                    <a href="/" class="btn btn-primary">Home</a>
+                </div>
+            </div>
+        </main>
+        <footer class="app-footer">
+            <p>© 2025 Pneumonia Detection</p>
+        </footer>
+    </div>
+    <script>
+        // Safely handle JSON data with scaling to percentages
+        const epochs = JSON.parse('{{ epochs|tojson|safe }}' || '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]');
+        const accuracy = JSON.parse('{{ accuracy|tojson|safe }}' || '[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]').map(v => v * 100);
+        const valAccuracy = JSON.parse('{{ val_accuracy|tojson|safe }}' || '[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]').map(v => v * 100);
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('accuracyChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: epochs,
+                datasets: [{
+                    label: 'Training Accuracy (%)',
+                    data: accuracy,
+                    borderColor: '#1e3a8a',
+                    backgroundColor: 'rgba(30, 58, 138, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Validation Accuracy (%)',
+                    data: valAccuracy,
+                    borderColor: '#6b7280',
+                    backgroundColor: 'rgba(107, 114, 128, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { callback: value => `${value}%` }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Training and Validation Accuracy' }
+                }
+            }
+        });
+
+        // Update heatmap and results from URL params as fallback
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('prediction').textContent = urlParams.get('prediction') || '{{ prediction }}';
+        document.getElementById('confidence').textContent = urlParams.get('confidence') || '{{ confidence }}';
+        document.getElementById('heatmap').src = decodeURIComponent(urlParams.get('heatmap') || '{{ heatmap }}');
+    </script>
+</body>
+</html>

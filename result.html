@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Result</h1>
+        <p>Prediction: <span id="prediction"></span></p>
+        <p>Confidence: <span id="confidence"></span>%</p>
+        <img src="" alt="Heatmap" id="heatmap">
+        <a href="/upload" class="btn">Try Again</a>
+        <a href="/" class="btn">Home</a>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('prediction').textContent = urlParams.get('prediction') || 'N/A';
+        document.getElementById('confidence').textContent = urlParams.get('confidence') || 'N/A';
+        document.getElementById('heatmap').src = decodeURIComponent(urlParams.get('heatmap') || 'https://via.placeholder.com/224x224.png?text=Heatmap');
+    </script>
+</body>
+</html>
