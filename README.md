@@ -6,3 +6,6 @@ This project is an AI-powered web application for detecting pneumonia from chest
 ## Related Work
 - Existing solutions like CheXNet use pre-trained models for pneumonia detection.
 - **Difference**: This project offers a custom CNN with interpretability via heatmaps and demographic tweaks, setting it apart from static pre-trained approaches.
+
+## Model Link
+- https://drive.google.com/file/d/1wUpIHeESlLdtnftPqGAjWOZ8i8c_SuoA/view?usp=drive_link
