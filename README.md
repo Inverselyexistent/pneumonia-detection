@@ -3,7 +3,7 @@
 ## Overview
 This project is an AI-powered web application for detecting pneumonia from chest X-rays using a custom deep learning model. It features real-time predictions, confidence scores, and Grad-CAM heatmaps, with age and gender adjustments for personalized results.
 
-#UI
+## UI
 
 ![Screenshot 2025-04-20 210412](https://github.com/user-attachments/assets/e15bb96a-ffa1-4512-a82a-3932815d3912)
 ![Screenshot 2025-04-21 013914](https://github.com/user-attachments/assets/1920b8a1-77b3-4e13-be64-307f81d7ba6a)
